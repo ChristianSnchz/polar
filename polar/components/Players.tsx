@@ -5,9 +5,27 @@ import AnimatedSection from './AnimatedSection';
 import { motion } from 'framer-motion';
 
 const players = [
-  { name: 'La Mole', position: 'Defensa', image: '/assets/mole.jpeg' },
-  { name: 'Dennis', position: 'Defensa', image: '/assets/dennis.jpeg' },
-  { name: 'Yhomer', position: 'Mediocampista', image: '/assets/cheito.jpeg' },
+  {
+    name: 'La Mole',
+    position: 'Defensa',
+    image: '/assets/mole.jpeg',
+    number: 2,
+    nationality: 'Venezuela',
+  },
+  {
+    name: 'Dennis',
+    position: 'Defensa',
+    image: '/assets/dennis.jpeg',
+    number: 10,
+    nationality: 'Venezuela',
+  },
+  {
+    name: 'Yhomer',
+    position: 'Mediocampista',
+    image: '/assets/cheito.jpeg',
+    number: 19,
+    nationality: 'Venezuela',
+  },
 ];
 
 export default function Players() {
@@ -26,24 +44,36 @@ export default function Players() {
           {players.map((player) => (
             <AnimatedSection key={player.name} className="flex justify-center">
               <motion.div
-                className=" rounded-lg shadow-lg p-6 text-center w-64
-                
-                  bg-gradient-to-b from-blue-800 to-pink-100
-                "
-                whileHover={{ scale: 1.05 }}
+                className="w-64 h-96 bg-gradient-to-br from-blue-600 to-pink-300 rounded-lg shadow-lg overflow-hidden relative"
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: '0px 0px 8px rgb(59, 130, 246)',
+                }}
                 transition={{ type: 'spring', stiffness: 300 }}
               >
-                <Image
-                  src={player.image}
-                  alt={player.name}
-                  width={200}
-                  height={200}
-                  className="mx-auto h-56 w-56 object-contain rounded-full mb-4"
-                />
-                <h3 className="text-xl font-semibold text-blue-700">
-                  {player.name}
-                </h3>
-                <p className="text-gray-600">{player.position}</p>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white to-transparent opacity-20 z-10"></div>
+                <div className="relative h-3/4">
+                  <Image
+                    src={player.image}
+                    alt={player.name}
+                    layout="fill"
+                    objectFit="contain"
+                    className="z-0"
+                  />
+                </div>
+                <div className="absolute top-2 left-2 bg-white rounded-full w-10 h-10 flex items-center justify-center z-20">
+                  <span className="text-blue-600 font-bold text-xl">
+                    {player.number}
+                  </span>
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-90 p-4 z-20">
+                  <h3 className="text-xl font-semibold text-blue-700">
+                    {player.name}
+                  </h3>
+                  <p className="text-gray-600">{player.position}</p>
+                  <p className="text-gray-500 text-sm">{player.nationality}</p>
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-tr from-blue-300 to-pink-100 opacity-0 hover:opacity-20 transition-opacity duration-300 z-30"></div>
               </motion.div>
             </AnimatedSection>
           ))}

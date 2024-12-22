@@ -3,6 +3,14 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
+import { Limelight } from 'next/font/google';
+
+const lime = Limelight({
+  subsets: ['latin'],
+  display: 'swap',
+  weight: '400',
+});
+
 export default function Hero() {
   return (
     <section className="relative h-screen overflow-hidden bg-blue-900">
@@ -34,7 +42,11 @@ export default function Hero() {
           transition={{ duration: 0.8 }}
           className="text-center"
         >
-          <h1 className="text-6xl font-bold mb-4">POLAR FC</h1>
+          <h1
+            className={`${lime.className} text-6xl  md:text-9xl font-bold uppercase`}
+          >
+            POLAR FC
+          </h1>
           {/* <p className="text-2xl mb-8">La fuerza del norte en el sur</p> */}
         </motion.div>
       </div>
@@ -71,7 +83,7 @@ export default function Hero() {
           repeatType: 'reverse',
         }}
       >
-        <p className="text-7xl">🐻‍❄️</p>
+        <p className="  text-2xl md:text-7xl">🐻‍❄️</p>
       </motion.div>
     </section>
   );
