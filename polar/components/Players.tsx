@@ -26,6 +26,13 @@ const players = [
     number: 19,
     nationality: 'Venezuela',
   },
+  {
+    name: 'Vicnaldo',
+    position: 'Delantero',
+    image: '/assets/vicnaldo.jpeg',
+    number: 9,
+    nationality: 'Venezuela',
+  },
 ];
 
 export default function Players() {
@@ -37,21 +44,21 @@ export default function Players() {
       <div className="container mx-auto px-4">
         <AnimatedSection>
           <h2 className="text-4xl font-bold text-center mb-12 ">
-            Nuestros Jugadores Estrella
+            Nuestras Estrellas
           </h2>
         </AnimatedSection>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 ">
           {players.map((player) => (
             <AnimatedSection key={player.name} className="flex justify-center">
               <motion.div
-                className="w-64 h-96 bg-gradient-to-br from-blue-600 to-pink-300 rounded-lg shadow-lg overflow-hidden relative"
+                className=" w-full md:w-64 h-96 bg-gradient-to-br from-blue-600 to-pink-300 rounded-lg shadow-lg overflow-hidden relative"
                 whileHover={{
                   scale: 1.05,
                   boxShadow: '0px 0px 8px rgb(59, 130, 246)',
                 }}
                 transition={{ type: 'spring', stiffness: 300 }}
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white to-transparent opacity-20 z-10"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white to-transparent opacity-0 z-10"></div>
                 <div className="relative h-3/4">
                   <Image
                     src={player.image}
