@@ -12,6 +12,12 @@ import AnimatedSection from './AnimatedSection';
 import { motion } from 'framer-motion';
 
 const games = [
+  {
+    date: '2025-02-08',
+    opponent: 'CA Peluche',
+    result: 'Derrota 2-1 (Amistoso)',
+  },
+  { date: '2025-02-01', opponent: 'Dynamo', result: 'Empate 2-2 (Amistoso) ' },
   { date: '2024-12-21', opponent: 'Bananero', result: 'Derrota 2-0' },
   { date: '2024-12-14', opponent: 'Mandarina', result: 'Victoria 5-2' },
 ];
