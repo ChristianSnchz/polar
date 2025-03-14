@@ -13,6 +13,21 @@ import { motion } from 'framer-motion';
 
 const games = [
   {
+    date: '2025-03-08',
+    opponent: 'Bici Volcan',
+    result: 'Victoria 1-0 (Cuadrangular)',
+  },
+  {
+    date: '2025-02-22',
+    opponent: 'Falso Equipo',
+    result: 'Derrota 1-0 (Cuadrangular)',
+  },
+  {
+    date: '2025-02-15',
+    opponent: 'Cuidado Tchuameni',
+    result: 'Derrota 2-1 (Amistoso)',
+  },
+  {
     date: '2025-02-08',
     opponent: 'CA Peluche',
     result: 'Derrota 2-1 (Amistoso)',
