@@ -13,6 +13,16 @@ import { motion } from 'framer-motion';
 
 const games = [
   {
+    date: '2025-03-22',
+    opponent: 'Sin Nombre',
+    result: 'Empate 0-0 (Amitoso)',
+  },
+  {
+    date: '2025-03-15',
+    opponent: 'NK FC',
+    result: 'Empate 0-0 (Cuadrangular)',
+  },
+  {
     date: '2025-03-08',
     opponent: 'Bici Volcan',
     result: 'Victoria 1-0 (Cuadrangular)',
