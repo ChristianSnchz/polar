@@ -3,25 +3,21 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
-import { Limelight } from 'next/font/google';
 
-const lime = Limelight({
-  subsets: ['latin'],
-  display: 'swap',
-  weight: '400',
-});
+
 
 export default function Hero() {
   return (
-    <section className="relative h-screen overflow-hidden bg-blue-900">
+    <section className="relative h-screen overflow-hidden bg-gradient-to-b from-blue-900 to-blue-800">
+      {/* Animated background pattern */}
       <motion.div
         className="absolute inset-0 z-0"
         animate={{
-          scale: [1, 1.1, 1],
-          rotate: [0, 3, 0],
+          scale: [1, 1.05, 1],
+          opacity: [0.3, 0.4, 0.3],
         }}
         transition={{
-          duration: 20,
+          duration: 15,
           repeat: Infinity,
           repeatType: 'reverse',
         }}
@@ -35,56 +31,41 @@ export default function Hero() {
         />
       </motion.div>
 
-      <div className="relative z-10 h-full flex flex-col justify-center items-center text-white">
+      {/* Main content */}
+      <div className="relative z-10 h-full flex flex-col justify-center items-center text-white px-4">
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center"
+          className="text-center max-w-4xl mx-auto"
         >
-          <h1
-            className={`${lime.className} text-6xl  md:text-9xl font-bold uppercase`}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+            className="mb-6"
           >
+            <span className="text-white text-lg md:text-xl font-semibold tracking-wider uppercase">
+              Bienvenidos a
+            </span>
+          </motion.div>
+          
+          <h1 className={`text-5xl md:text-8xl font-bold uppercase mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-200`}>
             POLAR FC
           </h1>
-          {/* <p className="text-2xl mb-8">La fuerza del norte en el sur</p> */}
+                            
         </motion.div>
       </div>
 
+      {/* Decorative elements */}
       <motion.div
-        className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-blue-900 to-transparent"
+        className="absolute bottom-0 left-0 w-full h-48 bg-gradient-to-t from-blue-900 to-transparent"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5, duration: 1 }}
       />
-      <motion.div
-        className="absolute top-1/4 left-10 w-32 h-32"
-        animate={{
-          y: [0, 20, 0],
-          rotate: [0, 10, 0],
-        }}
-        transition={{
-          duration: 5,
-          repeat: Infinity,
-          repeatType: 'reverse',
-        }}
-      >
-        <p className="text-7xl">⚽</p>
-      </motion.div>
-      <motion.div
-        className="absolute bottom-1/4 right-10 w-48 h-48"
-        animate={{
-          y: [0, -30, 0],
-          rotate: [0, -15, 0],
-        }}
-        transition={{
-          duration: 6,
-          repeat: Infinity,
-          repeatType: 'reverse',
-        }}
-      >
-        <p className="  text-2xl md:text-7xl">🐻‍❄️</p>
-      </motion.div>
+      
+  
     </section>
   );
 }
