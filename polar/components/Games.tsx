@@ -248,42 +248,77 @@ export default function Games() {
         {/* Games Table */}
         <AnimatedSection>
           <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="text-white bg-gradient-to-t from-blue-600 to-blue-800">
-                    Fecha
-                  </TableHead>
-                  <TableHead className="bg-blue-600 text-white">Oponente</TableHead>
-                  <TableHead className="bg-blue-600 text-white">Tipo</TableHead>
-                  <TableHead className="bg-blue-600 text-white">Resultado</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredGames.map((game, index) => (
-                  <motion.tr
-                    key={game.date}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    className="hover:bg-blue-50 transition-colors"
-                  >
-                    <TableCell>{game.date}</TableCell>
-                    <TableCell>{game.opponent}</TableCell>
-                    <TableCell>
-                      <span className={`px-2 py-1 rounded-full text-sm ${
-                        game.type === 'Oficial' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'
-                      }`}>
-                        {game.type}
-                      </span>
-                    </TableCell>
-                    <TableCell className={getResultColor(game.result)}>
-                      {game.result}
-                    </TableCell>
-                  </motion.tr>
-                ))}
-              </TableBody>
-            </Table>
+            {/* Desktop Table View */}
+            <div className="hidden md:block overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="text-white bg-gradient-to-t from-blue-600 to-blue-800 min-w-[100px]">
+                      Fecha
+                    </TableHead>
+                    <TableHead className="bg-blue-600 text-white min-w-[120px]">Oponente</TableHead>
+                    <TableHead className="bg-blue-600 text-white min-w-[100px]">Tipo</TableHead>
+                    <TableHead className="bg-blue-600 text-white min-w-[120px]">Resultado</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {filteredGames.map((game, index) => (
+                    <motion.tr
+                      key={game.date}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="hover:bg-blue-50 transition-colors"
+                    >
+                      <TableCell className="py-3 px-2 sm:px-4 text-sm sm:text-base break-words">
+                        {game.date}
+                      </TableCell>
+                      <TableCell className="py-3 px-2 sm:px-4 text-sm sm:text-base break-words">
+                        {game.opponent}
+                      </TableCell>
+                      <TableCell className="py-3 px-2 sm:px-4 text-sm sm:text-base">
+                        <span className={`px-2 py-1 rounded-full text-sm ${
+                          game.type === 'Oficial' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'
+                        }`}>
+                          {game.type}
+                        </span>
+                      </TableCell>
+                      <TableCell className={`py-3 px-2 sm:px-4 text-sm sm:text-base break-words ${getResultColor(game.result)}`}>
+                        {game.result}
+                      </TableCell>
+                    </motion.tr>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+
+            {/* Mobile Card View */}
+            <div className="md:hidden space-y-4 p-4">
+              {filteredGames.map((game, index) => (
+                <motion.div
+                  key={game.date}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="bg-white rounded-lg shadow-md p-4 border border-gray-100"
+                >
+                  <div className="flex justify-between items-start mb-2">
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-lg">{game.opponent}</h3>
+                      <p className="text-gray-600 text-sm">{game.date}</p>
+                    </div>
+                    <span className={`px-2 py-1 rounded-full text-sm ${
+                      game.type === 'Oficial' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'
+                    }`}>
+                      {game.type}
+                    </span>
+                  </div>
+                  <div className={`text-lg font-medium ${getResultColor(game.result)}`}>
+                    {game.result}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </AnimatedSection>
       </div>

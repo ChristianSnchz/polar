@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import AnimatedSection from './AnimatedSection';
 import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
 
 const players = [
   {
@@ -36,6 +37,23 @@ const players = [
 ];
 
 export default function Players() {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const teamImages = [
+    '/assets/team-1.jpeg',
+    '/assets/team-2.jpeg',
+    '/assets/team-3.jpeg'
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => 
+        prevIndex === teamImages.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 5000); // Change image every 5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section
       id="players"
@@ -106,17 +124,36 @@ export default function Players() {
 
         <AnimatedSection className="mt-16">
           <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-            <Image
-              src="/assets/team-3.jpeg"
-              alt="Equipo de fútbol"
-              width={1200}
-              height={600}
-              className="w-full h-[400px] object-cover"
-            />
+            <motion.div
+              key={currentImageIndex}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Image
+                src={teamImages[currentImageIndex]}
+                alt="Equipo de fútbol"
+                width={1200}
+                height={800}
+                className="w-full h-[800px] object-cover"
+              />
+            </motion.div>
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
             <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
               <h3 className="text-3xl font-bold mb-2">Unidos por la Pasión</h3>
               <p className="text-lg opacity-90">Un equipo que lucha por la gloria en cada partido</p>
+            </div>
+            <div className="absolute bottom-4 right-4 flex gap-2">
+              {teamImages.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentImageIndex(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    index === currentImageIndex ? 'bg-white scale-125' : 'bg-white/50'
+                  }`}
+                />
+              ))}
             </div>
           </div>
         </AnimatedSection>
