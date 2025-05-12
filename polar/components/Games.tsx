@@ -1,13 +1,5 @@
 'use client';
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
 import AnimatedSection from './AnimatedSection';
 import { motion } from 'framer-motion';
 import {
@@ -22,7 +14,6 @@ import {
 } from 'chart.js';
 import { Bar, Pie } from 'react-chartjs-2';
 import { useState } from 'react';
-import { Button } from './ui/button';
 
 ChartJS.register(
   CategoryScale,
@@ -42,6 +33,12 @@ interface Game {
 }
 
 const games: Game[] = [
+  {
+    date: '2025-05-10',
+    opponent: 'Sumo',
+    result: 'Derrota 3-2 (Campeonato)',
+    type: 'Oficial',
+  },
   {
     date: '2025-05-03',
     opponent: 'La resurrección FC',
@@ -130,10 +127,18 @@ const calculateStats = (games: Game[]): Stats => {
   };
 };
 
+// Card color themes
+const CARD_COLORS = [
+  { border: '#3b82f6', bg: '#1e3a8a', text: '#ffffff', accent: '#3b82f6' },  // Blue
+  { border: '#10b981', bg: '#064e3b', text: '#ffffff', accent: '#10b981' },  // Green
+  { border: '#f59e0b', bg: '#78350f', text: '#ffffff', accent: '#f59e0b' },  // Yellow
+  { border: '#ef4444', bg: '#7f1d1d', text: '#ffffff', accent: '#ef4444' },  // Red
+];
+
 const getResultColor = (result: string): string => {
-  if (result.startsWith('Victoria')) return 'text-green-600';
-  if (result.startsWith('Derrota')) return 'text-red-600';
-  return 'text-yellow-600';
+  if (result.startsWith('Victoria')) return 'text-green-500';
+  if (result.startsWith('Derrota')) return 'text-red-500';
+  return 'text-yellow-500';
 };
 
 export default function Games() {
@@ -154,7 +159,7 @@ export default function Games() {
   };
 
   const barChartData = {
-    labels: filteredGames.map(g => g.date),
+    labels: filteredGames.map(g => g.date.substring(5)), // Only showing MM-DD
     datasets: [
       {
         label: 'Goles',
@@ -171,137 +176,268 @@ export default function Games() {
 
   const chartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: 'top' as const,
+        labels: {
+          color: '#fff',
+          font: {
+            size: 12
+          }
+        }
       },
+      title: {
+        display: false
+      }
     },
+    scales: {
+      x: {
+        ticks: {
+          color: '#9ca3af'
+        },
+        grid: {
+          color: 'rgba(75, 85, 99, 0.2)'
+        }
+      },
+      y: {
+        ticks: {
+          color: '#9ca3af'
+        },
+        grid: {
+          color: 'rgba(75, 85, 99, 0.2)'
+        }
+      }
+    }
+  };
+
+  const pieOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'top' as const,
+        labels: {
+          color: '#fff',
+          font: {
+            size: 12
+          }
+        }
+      }
+    }
   };
 
   return (
-    <section id="games" className="py-20 bg-gradient-to-b from-white to-blue-50">
+    <section id="games" className="py-24 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900">
       <div className="container mx-auto px-4">
         <AnimatedSection>
-          <h2 className="text-4xl font-bold mb-12">Últimos Juegos</h2>
+          <div className="text-center mb-16">
+            <h2 className="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
+              Estadísticas y Partidos
+            </h2>
+            <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+              Seguimiento de nuestro rendimiento en el terreno de juego
+            </p>
+          </div>
         </AnimatedSection>
 
         {/* Stats Cards */}
         <AnimatedSection>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
             <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="bg-white p-6 rounded-lg shadow-lg"
+              whileHover={{ y: -5, boxShadow: '0 20px 25px rgba(0,0,0,0.4)' }}
+              className="overflow-hidden relative"
+              style={{ 
+                background: CARD_COLORS[0].bg,
+                border: `4px solid ${CARD_COLORS[0].border}`,
+                boxShadow: `0 10px 20px rgba(0,0,0,0.3), 0 0 10px ${CARD_COLORS[0].border}66`
+              }}
             >
-              <h3 className="text-lg font-semibold text-gray-600">Total Partidos</h3>
-              <p className="text-3xl font-bold text-blue-600">{stats.total}</p>
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-transparent pointer-events-none" />
+              <div className="p-5 relative z-10">
+                <h3 className="text-gray-300 font-medium text-sm uppercase tracking-wider mb-1">Total Partidos</h3>
+                <p className="text-4xl font-bold" style={{ color: CARD_COLORS[0].border }}>{stats.total}</p>
+              </div>
             </motion.div>
+
             <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="bg-white p-6 rounded-lg shadow-lg"
+              whileHover={{ y: -5, boxShadow: '0 20px 25px rgba(0,0,0,0.4)' }}
+              className="overflow-hidden relative"
+              style={{ 
+                background: CARD_COLORS[1].bg,
+                border: `4px solid ${CARD_COLORS[1].border}`,
+                boxShadow: `0 10px 20px rgba(0,0,0,0.3), 0 0 10px ${CARD_COLORS[1].border}66`
+              }}
             >
-              <h3 className="text-lg font-semibold text-gray-600">Victorias</h3>
-              <p className="text-3xl font-bold text-green-600">{stats.wins}</p>
+              <div className="absolute inset-0 bg-gradient-to-br from-green-600/20 to-transparent pointer-events-none" />
+              <div className="p-5 relative z-10">
+                <h3 className="text-gray-300 font-medium text-sm uppercase tracking-wider mb-1">Victorias</h3>
+                <p className="text-4xl font-bold" style={{ color: CARD_COLORS[1].border }}>{stats.wins}</p>
+              </div>
             </motion.div>
+
             <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="bg-white p-6 rounded-lg shadow-lg"
+              whileHover={{ y: -5, boxShadow: '0 20px 25px rgba(0,0,0,0.4)' }}
+              className="overflow-hidden relative"
+              style={{ 
+                background: CARD_COLORS[2].bg,
+                border: `4px solid ${CARD_COLORS[2].border}`,
+                boxShadow: `0 10px 20px rgba(0,0,0,0.3), 0 0 10px ${CARD_COLORS[2].border}66`
+              }}
             >
-              <h3 className="text-lg font-semibold text-gray-600">Empates</h3>
-              <p className="text-3xl font-bold text-yellow-600">{stats.draws}</p>
+              <div className="absolute inset-0 bg-gradient-to-br from-yellow-600/20 to-transparent pointer-events-none" />
+              <div className="p-5 relative z-10">
+                <h3 className="text-gray-300 font-medium text-sm uppercase tracking-wider mb-1">Empates</h3>
+                <p className="text-4xl font-bold" style={{ color: CARD_COLORS[2].border }}>{stats.draws}</p>
+              </div>
             </motion.div>
+
             <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="bg-white p-6 rounded-lg shadow-lg"
+              whileHover={{ y: -5, boxShadow: '0 20px 25px rgba(0,0,0,0.4)' }}
+              className="overflow-hidden relative"
+              style={{ 
+                background: CARD_COLORS[3].bg,
+                border: `4px solid ${CARD_COLORS[3].border}`,
+                boxShadow: `0 10px 20px rgba(0,0,0,0.3), 0 0 10px ${CARD_COLORS[3].border}66`
+              }}
             >
-              <h3 className="text-lg font-semibold text-gray-600">% Victoria</h3>
-              <p className="text-3xl font-bold text-blue-600">{stats.winRate}%</p>
+              <div className="absolute inset-0 bg-gradient-to-br from-red-600/20 to-transparent pointer-events-none" />
+              <div className="p-5 relative z-10">
+                <h3 className="text-gray-300 font-medium text-sm uppercase tracking-wider mb-1">Derrotas</h3>
+                <p className="text-4xl font-bold" style={{ color: CARD_COLORS[3].border }}>{stats.losses}</p>
+              </div>
             </motion.div>
+          </div>
+        </AnimatedSection>
+
+        {/* Win Rate Progress Bar */}
+        <AnimatedSection>
+          <div className="bg-gray-800 rounded-xl overflow-hidden border border-gray-700 shadow-xl p-6 mb-16">
+            <h3 className="text-2xl font-bold text-white mb-6">Porcentaje de Victoria: <span className="text-blue-400">{stats.winRate}%</span></h3>
+            <div className="h-5 bg-gray-700 rounded-full overflow-hidden">
+              <motion.div 
+                className="h-full rounded-full bg-gradient-to-r from-blue-600 to-blue-400"
+                initial={{ width: 0 }}
+                animate={{ width: `${Math.min(100, parseFloat(stats.winRate))}%` }}
+                transition={{ duration: 1.5, ease: "easeOut" }}
+              />
+            </div>
+            <div className="mt-2 text-gray-400 text-sm">{stats.wins} victorias de {stats.total} partidos</div>
           </div>
         </AnimatedSection>
 
         {/* Charts */}
         <AnimatedSection>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            <div className="bg-white p-6 rounded-lg shadow-lg">
-              <h3 className="text-xl font-semibold mb-4">Distribución de Partidos</h3>
-              <Pie data={pieChartData} options={chartOptions} />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            <div className="bg-gray-800 rounded-xl overflow-hidden border border-gray-700 shadow-xl">
+              <div className="p-6">
+                <h3 className="text-2xl font-bold text-white mb-4">Tipos de Partidos</h3>
+                <div className="h-60">
+                  <Pie data={pieChartData} options={pieOptions} />
+                </div>
+                <div className="flex justify-center gap-8 mt-4">
+                  <div className="text-center">
+                    <div className="text-xl font-bold text-blue-400">{stats.official}</div>
+                    <div className="text-gray-400 text-sm">Oficiales</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-xl font-bold text-blue-300">{stats.friendly}</div>
+                    <div className="text-gray-400 text-sm">Amistosos</div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="bg-white p-6 rounded-lg shadow-lg">
-              <h3 className="text-xl font-semibold mb-4">Goles por Partido</h3>
-              <Bar data={barChartData} options={chartOptions} />
+            <div className="bg-gray-800 rounded-xl overflow-hidden border border-gray-700 shadow-xl">
+              <div className="p-6">
+                <h3 className="text-2xl font-bold text-white mb-4">Goles por Partido</h3>
+                <div className="h-60">
+                  <Bar data={barChartData} options={chartOptions} />
+                </div>
+              </div>
             </div>
           </div>
         </AnimatedSection>
 
         {/* Filters */}
         <AnimatedSection>
-          <div className="flex gap-4 mb-6">
-            <Button
-              variant={filter === 'all' ? 'default' : 'outline'}
+          <div className="flex gap-4 mb-6 justify-center">
+            <motion.button
+              whileHover={{ y: -2, boxShadow: '0 10px 15px rgba(0,0,0,0.3)' }}
+              className={`px-5 py-2 rounded-lg font-medium transition-colors text-sm ${
+                filter === 'all' 
+                  ? 'bg-blue-600 text-white' 
+                  : 'bg-gray-800 text-gray-300 border border-gray-700'
+              }`}
               onClick={() => setFilter('all')}
             >
               Todos
-            </Button>
-            <Button
-              variant={filter === 'Amistoso' ? 'default' : 'outline'}
+            </motion.button>
+            <motion.button
+              whileHover={{ y: -2, boxShadow: '0 10px 15px rgba(0,0,0,0.3)' }}
+              className={`px-5 py-2 rounded-lg font-medium transition-colors text-sm ${
+                filter === 'Amistoso' 
+                  ? 'bg-blue-600 text-white' 
+                  : 'bg-gray-800 text-gray-300 border border-gray-700'
+              }`}
               onClick={() => setFilter('Amistoso')}
             >
               Amistosos
-            </Button>
-            <Button
-              variant={filter === 'Oficial' ? 'default' : 'outline'}
+            </motion.button>
+            <motion.button
+              whileHover={{ y: -2, boxShadow: '0 10px 15px rgba(0,0,0,0.3)' }}
+              className={`px-5 py-2 rounded-lg font-medium transition-colors text-sm ${
+                filter === 'Oficial' 
+                  ? 'bg-blue-600 text-white' 
+                  : 'bg-gray-800 text-gray-300 border border-gray-700'
+              }`}
               onClick={() => setFilter('Oficial')}
             >
               Oficiales
-            </Button>
+            </motion.button>
           </div>
         </AnimatedSection>
 
         {/* Games Table */}
         <AnimatedSection>
-          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+          <div className="bg-gray-800 rounded-xl overflow-hidden border border-gray-700 shadow-xl">
             {/* Desktop Table View */}
             <div className="hidden md:block overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="text-white bg-gradient-to-t from-blue-600 to-blue-800 min-w-[100px]">
-                      Fecha
-                    </TableHead>
-                    <TableHead className="bg-blue-600 text-white min-w-[120px]">Oponente</TableHead>
-                    <TableHead className="bg-blue-600 text-white min-w-[100px]">Tipo</TableHead>
-                    <TableHead className="bg-blue-600 text-white min-w-[120px]">Resultado</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-gray-700">
+                    <th className="py-4 px-4 text-left text-gray-300 font-medium text-sm uppercase tracking-wider">Fecha</th>
+                    <th className="py-4 px-4 text-left text-gray-300 font-medium text-sm uppercase tracking-wider">Oponente</th>
+                    <th className="py-4 px-4 text-left text-gray-300 font-medium text-sm uppercase tracking-wider">Tipo</th>
+                    <th className="py-4 px-4 text-left text-gray-300 font-medium text-sm uppercase tracking-wider">Resultado</th>
+                  </tr>
+                </thead>
+                <tbody>
                   {filteredGames.map((game, index) => (
                     <motion.tr
                       key={game.date}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                      className="hover:bg-blue-50 transition-colors"
+                      transition={{ delay: index * 0.05 }}
+                      className="border-b border-gray-700 hover:bg-gray-700/50 transition-colors"
                     >
-                      <TableCell className="py-3 px-2 sm:px-4 text-sm sm:text-base break-words">
-                        {game.date}
-                      </TableCell>
-                      <TableCell className="py-3 px-2 sm:px-4 text-sm sm:text-base break-words">
-                        {game.opponent}
-                      </TableCell>
-                      <TableCell className="py-3 px-2 sm:px-4 text-sm sm:text-base">
-                        <span className={`px-2 py-1 rounded-full text-sm ${
-                          game.type === 'Oficial' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'
+                      <td className="py-4 px-4 text-gray-300">{game.date}</td>
+                      <td className="py-4 px-4 text-white font-medium">{game.opponent}</td>
+                      <td className="py-4 px-4">
+                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                          game.type === 'Oficial' 
+                            ? 'bg-blue-900 text-blue-300 border border-blue-600' 
+                            : 'bg-green-900 text-green-300 border border-green-600'
                         }`}>
                           {game.type}
                         </span>
-                      </TableCell>
-                      <TableCell className={`py-3 px-2 sm:px-4 text-sm sm:text-base break-words ${getResultColor(game.result)}`}>
+                      </td>
+                      <td className={`py-4 px-4 font-medium ${getResultColor(game.result)}`}>
                         {game.result}
-                      </TableCell>
+                      </td>
                     </motion.tr>
                   ))}
-                </TableBody>
-              </Table>
+                </tbody>
+              </table>
             </div>
 
             {/* Mobile Card View */}
@@ -311,16 +447,18 @@ export default function Games() {
                   key={game.date}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="bg-white rounded-lg shadow-md p-4 border border-gray-100"
+                  transition={{ delay: index * 0.05 }}
+                  className="bg-gray-700 rounded-lg p-4 border border-gray-600"
                 >
                   <div className="flex justify-between items-start mb-2">
                     <div className="flex-1">
-                      <h3 className="font-semibold text-lg">{game.opponent}</h3>
-                      <p className="text-gray-600 text-sm">{game.date}</p>
+                      <h3 className="font-semibold text-lg text-white">{game.opponent}</h3>
+                      <p className="text-gray-400 text-sm">{game.date}</p>
                     </div>
-                    <span className={`px-2 py-1 rounded-full text-sm ${
-                      game.type === 'Oficial' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      game.type === 'Oficial' 
+                        ? 'bg-blue-900 text-blue-300 border border-blue-600' 
+                        : 'bg-green-900 text-green-300 border border-green-600'
                     }`}>
                       {game.type}
                     </span>
