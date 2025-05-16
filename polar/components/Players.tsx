@@ -59,7 +59,7 @@ const players = [
   {
     name: 'Jose Caracas',
     position: 'Defensa',
-    image: '/assets/default.png',
+    image: '/assets/caracas.jpeg',
     number: 5,
     nationality: 'Venezuela',
     goals: 0,
@@ -67,7 +67,7 @@ const players = [
   {
     name: 'Roger Maquina',
     position: 'Defensa',
-    image: '/assets/default.png',
+    image: '/assets/marquina.jpg',
     number: 6,
     nationality: 'Venezuela',
     goals: 0,
@@ -83,7 +83,7 @@ const players = [
   {
     name: 'Roger Figuera',
     position: 'Mediocampista',
-    image: '/assets/default.png',
+    image: '/assets/roger.jpg',
     number: 9,
     nationality: 'Venezuela',
     goals: 0,
@@ -139,7 +139,7 @@ const players = [
   {
     name: 'El Parce',
     position: 'Delantero',
-    image: '/assets/default.png',
+    image: '/assets/parce.jpeg',
     number: 15,
     nationality: 'Colombiano',
     goals: 0,
