@@ -11,7 +11,7 @@ const players = [
   {
     name: 'Marco Antonio',
     position: 'Portero',
-    image: '/assets/default.png',
+    image: '/assets/marco.jpg',
     number: 1,
     nationality: 'Venezuela',
     goals: 0,
@@ -91,7 +91,7 @@ const players = [
   {
     name: 'Miguel',
     position: 'Mediocampista',
-    image: '/assets/default.png',
+    image: '/assets/miguel.jpg',
     number: 10,
     nationality: 'Venezuela',
     goals: 0,
@@ -99,7 +99,7 @@ const players = [
   {
     name: 'Joel',
     position: 'Mediocampista',
-    image: '/assets/default.png',
+    image: '/assets/joel.jpg',
     number: 11,
     nationality: 'Venezuela',
     goals: 0,
@@ -123,7 +123,7 @@ const players = [
   {
     name: 'Gabriel Diaz',
     position: 'Delantero',
-    image: '/assets/default.png',
+    image: '/assets/gabo.jpg',
     number: 13,
     nationality: 'Venezuela',
     goals: 6,
@@ -131,7 +131,7 @@ const players = [
   {
     name: 'Buba',
     position: 'Delantero',
-    image: '/assets/default.png',
+    image: '/assets/buba.jpg',
     number: 14,
     nationality: 'Venezuela',
     goals: 1,
