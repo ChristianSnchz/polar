@@ -34,6 +34,12 @@ interface Game {
 
 const games: Game[] = [
   {
+    date: '2025-05-24',
+    opponent: 'Los Tonfa',
+    result: 'Empate 1-1 (Campeonato)',
+    type: 'Oficial',
+  },
+  {
     date: '2025-05-10',
     opponent: 'Sumo',
     result: 'Derrota 3-2 (Campeonato)',
